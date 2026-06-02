@@ -37,6 +37,8 @@ RETRIES = $retries
 # previously was bunkr-albums.io
 CHECK_FILE_VALIDITY = $check_validity  # depends on ffprobe (ffmpeg suite)
 USER_AGENT = "$user_agent"
+
+COOKIE_LIST = []  # default, not needed right now
 EOF
 
 echo ""
