@@ -2,4 +2,3 @@ beautifulsoup4
 playwright
 requests
 tqdm
-sqlite
