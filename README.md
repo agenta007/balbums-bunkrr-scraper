@@ -1,6 +1,20 @@
-# balbums.st and bunkr.cr Scraper
+# balbums.st and bunkr.cr scraper
 
 Automated tool to search and cache album links from [balbums.st](https://balbums.st) and download media files (images and videos) from [bunkr.cr](https://bunkr.cr). Walks each album, caches links and titles.
+
+## Requirements
+
+* Python 3.10+
+* Network access
+* Playwright (for session and actual download link retrieval)
+
+```
+beautifulsoup4
+playwright
+requests
+tqdm
+```
+
 
 # Quick Start
 
@@ -28,19 +42,7 @@ pip install -r requirements.txt
 ```bash
 playwright install chromium
 ```
-
-## Requirements
-
-* Python 3.10+
-* Network access
-* Playwright (for session and actual download link retrieval)
-
-```
-beautifulsoup4
-playwright
-requests
-tqdm
-```
+## 3. Change OUTPUT_DIR in vars.py
 
 # Usage
 
