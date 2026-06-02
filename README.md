@@ -18,7 +18,13 @@ tqdm
 
 ## Quick Start
 
-Run the setup script for your platform:
+Clone the repo first:
+
+```bash
+git clone https://github.com/agenta007/balbums-bunkrr-scraper && cd balbums-bunkrr-scraper
+```
+
+Then run the setup script for your platform:
 
 **Linux/macOS:**
 ```bash
@@ -33,13 +39,6 @@ bash setup.sh
 The setup script will install dependencies, install the Playwright browser engine, and prompt you to configure `config.py`.
 
 ## Manual Setup
-
-Clone the repo and create a virtual environment:
-
-```bash
-git clone https://github.com/agenta007/balbums-bunkrr-scraper && cd balbums-bunkrr-scraper
-python -m venv venv
-```
 
 Activate the virtual environment:
 
@@ -62,7 +61,7 @@ pip install -r requirements.txt
 Install the Playwright browser engine:
 
 ```bash
-python -m playwright install chromium
+python -m playwright install firefox
 ```
 
 Edit `config.py` and set `OUTPUT_DIR` to your desired media output location.
