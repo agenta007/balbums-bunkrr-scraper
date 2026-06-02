@@ -36,6 +36,10 @@ CHECK_FILE_VALIDITY = $check_validity  # depends on ffprobe (ffmpeg suite)
 USER_AGENT = "$user_agent"
 
 COOKIE_LIST = []  # default, not needed right now
+
+VIDEO_EXTENSIONS = {".mp4", ".mkv", ".webm", ".mov", ".avi", ".wmv", ".m4v"}
+IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".tiff", ".avif"}
+MEDIA_EXTENSIONS = VIDEO_EXTENSIONS | IMAGE_EXTENSIONS
 "@ | Set-Content vars.py
 
 Write-Host ""
