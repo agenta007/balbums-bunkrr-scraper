@@ -23,7 +23,7 @@ from playwright.sync_api import sync_playwright
 import bs4
 import requests
 from vars import *
-from helpers import is_valid_video
+from helpers import is_valid_media
 from tqdm import tqdm
 
 class _Session:
@@ -186,7 +186,7 @@ class _Session:
             try:
                 with requests.get(url, headers=headers, stream=True, timeout=timeout) as resp:
                     if resp.status_code == 416:
-                        print(f"[skip] already complete: {dest.name}")
+                        print(f"[skip] response code was 416: {dest.name}")
                         return
                     resp.raise_for_status()
 
@@ -216,7 +216,6 @@ class _Session:
             except requests.exceptions.HTTPError as e:
                 if e.response.status_code == 429:
                     time.sleep(THROTTLE_HTTP_429_SECS)
-
         print(f"[moving on] gave up after {retries} attempts: {dest.name}")
 
     def close(self) -> None:
@@ -646,7 +645,7 @@ def download_album(album_url: str, destination: Path,  update: Optional[bool], c
 
         print(f"[download] {cdn_url} -> {dest}")
         _session.download(cdn_url, dest)
-        print(f"[done] {filename}")
+        print(f"[finished] {filename}")
 
 def search(args: argparse.Namespace, cache: Cache, update: bool) -> int:
     search_url = args.search_url or build_search_url(args.base_url, args.search)
@@ -745,7 +744,6 @@ def search(args: argparse.Namespace, cache: Cache, update: bool) -> int:
             if not is_media_file(info.filename, info.download_url):
                 print(f"[skip] not a video/image {info.filename or info.download_url}")
                 continue
-
             size_bytes = info.size_bytes
             if size_bytes is None:
                 size_bytes = head_content_length(info.download_url)
@@ -756,24 +754,19 @@ def search(args: argparse.Namespace, cache: Cache, update: bool) -> int:
                 if size_bytes > max_bytes:
                     print(f"[skip] {info.download_url} size {size_bytes / 1024 / 1024:.2f}MB > limit")
                     continue
-
             filename = sanitize_filename(info.filename or Path(urlparse(info.download_url).path).name)
             #dest = output_dir / sanitize_filename(album_title or urlparse(album_url).path.strip("/") or "album")
             dest = output_dir / sanitize_filename(album_title)
             dest_file = dest / filename
             dest.mkdir(parents=True, exist_ok=True)
-
-            if dest_file.exists():
-                print(f"[skip] already downloaded: {dest_file}")
-                continue
-
-            print(f"[download] {info.download_url} -> {dest_file}")
             try:
-                if filename.split(".")[-1] in VIDEO_EXTENSIONS:
-                    if Path.is_file(dest_file) and is_valid_video(dest_file):
-                        print("[info] skipping file download since it is a valid video already")
-                    else:
-                        download_file(info.download_url, dest_file)
+                if CHECK_FILE_VALIDITY:
+                    if Path.is_file(dest_file) and is_valid_media(dest_file):
+                        print(f"[ffprobe] skipping {filename} since ffprobe detects it's a valid media file")
+                        continue
+                    print(f"[download] {info.download_url} -> {dest_file}")
+                    download_file(info.download_url, dest_file)
+                    print(f"[finished] {info.download_url} -> {dest_file}")
             except Exception as exc:
                 print(f"[warn] failed download {info.download_url}: {exc}")
             time.sleep(0.5)
