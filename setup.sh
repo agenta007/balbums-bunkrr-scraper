@@ -20,6 +20,7 @@ read -p "Enter output directory (e.g. /mnt/raid/bunkrr/): " output_dir
 read -p "Throttle on HTTP 429 (seconds) [90]: " throttle
 read -p "Retries [10]: " retries
 read -p "Check file validity with ffprobe? (True/False) [True]: " check_validity
+read -p "User agent [Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0]: " user_agent
 
 throttle=${throttle:-90}
 retries=${retries:-10}
@@ -34,6 +35,7 @@ RETRIES = $retries
 
 # previously was bunkr-albums.io
 CHECK_FILE_VALIDITY = $check_validity  # depends on ffprobe (ffmpeg suite)
+USER_AGENT = "$user_agent"
 EOF
 
 echo ""

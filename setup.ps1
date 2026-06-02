@@ -17,6 +17,7 @@ $output_dir = Read-Host "Enter output directory (e.g. C:\Media\bunkrr\)"
 $throttle = Read-Host "Throttle on HTTP 429 (seconds) [90]"
 $retries = Read-Host "Retries [10]"
 $check_validity = Read-Host "Check file validity with ffprobe? (True/False) [True]"
+$user_agent = Read-Host "User agent [Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0]"
 
 if (-not $throttle) { $throttle = "90" }
 if (-not $retries) { $retries = "10" }
@@ -31,6 +32,8 @@ RETRIES = $retries
 
 # previously was bunkr-albums.io
 CHECK_FILE_VALIDITY = $check_validity  # depends on ffprobe (ffmpeg suite)
+"@ | Set-Content vars.py
+USER_AGENT = "$user_agent"
 "@ | Set-Content vars.py
 
 Write-Host ""
