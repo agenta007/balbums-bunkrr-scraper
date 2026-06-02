@@ -607,7 +607,7 @@ def download_album(album_url: str, destination: Path,  update: Optional[bool], c
             for link in soup.find_all("a", href=True)
             if "/f/" in link["href"]
         ]
-        #cache.set_files(album_url, file_links_local)
+        #cache.set_album_files(album_url, file_links_local)
         files_found = len(file_links_local)
         print(f"[info] found {files_found} files on album page {album_page}")
         if files_found == last_count:
@@ -617,14 +617,14 @@ def download_album(album_url: str, destination: Path,  update: Optional[bool], c
         files_links.extend(file_links_local)
         i += 1
         last_count = files_found
-    cached_files = cache.get_files(album_url)
+    cached_files = cache.get_album_files(album_url)
     if cached_files and not update:
         file_links, scraped_at = cached_files
         print(f"[cache] {len(file_links)} files (cached {scraped_at})")
     else:
         album_pages = collect_album_pages(album_url)
         file_links = collect_file_links(album_pages)
-        cache.set_files(album_url, file_links)
+        cache.set_album_files(album_url, file_links)
     for file_link in set(files_links):
         file_response = fetch_html(file_link)
         soup = bs4.BeautifulSoup(file_response, "html.parser")
