@@ -22,6 +22,7 @@ $user_agent = Read-Host "User agent [Mozilla/5.0 (X11; Linux x86_64; rv:151.0) G
 if (-not $throttle) { $throttle = "90" }
 if (-not $retries) { $retries = "10" }
 if (-not $check_validity) { $check_validity = "True" }
+if (-not $user_agent) { $user_agent = "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0" }
 
 Write-Host "Writing vars.py..." -ForegroundColor Cyan
 @"
@@ -32,7 +33,6 @@ RETRIES = $retries
 
 # previously was bunkr-albums.io
 CHECK_FILE_VALIDITY = $check_validity  # depends on ffprobe (ffmpeg suite)
-"@ | Set-Content vars.py
 USER_AGENT = "$user_agent"
 "@ | Set-Content vars.py
 

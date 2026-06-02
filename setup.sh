@@ -25,6 +25,7 @@ read -p "User agent [Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Fi
 throttle=${throttle:-90}
 retries=${retries:-10}
 check_validity=${check_validity:-True}
+user_agent=${user_agent:-"Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0"}
 
 echo "Writing vars.py..."
 cat > vars.py << EOF
