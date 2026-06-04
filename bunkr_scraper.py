@@ -37,7 +37,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--output",
-        default="downloads",
+        default=OUTPUT_DIR,
         help="Directory to store downloaded videos",
     )
     parser.add_argument(
